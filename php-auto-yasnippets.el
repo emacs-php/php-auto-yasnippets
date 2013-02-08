@@ -52,9 +52,28 @@
 ;; names, any default values, et cetera.
 
 ;;; Code:
+;;
+;; Every function beginning with 'payas/' is internal to this package
+;; and no other script should rely on them.  They may change in future
+;; versions without warning.
+
+(require 'php-mode)
+(require 'yasnippet)
 
 (defconst php-auto-yasnippet-version "0.1"
   "The version number for the php-auto-yasnippet package.")
+
+(defvar php-auto-yasnippet-php-program
+  (expand-file-name "~/.emacs.d/php-auto-yasnippets/Create-PHP-YASnippet.php")
+  "The path to the program `Create-PHP-YASnippet.php'.")
+
+(defun payas/create-template-string (input)
+  "Takes a string of INPUT and returns a string intended for the
+function `yas--parse-template'."
+  (with-temp-buffer
+    (call-process php-executable nil (current-buffer) nil
+                  php-auto-yasnippet-php-program input)
+    (buffer-string)))
 
 (provide 'php-auto-yasnippets)
 
