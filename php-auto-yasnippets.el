@@ -82,8 +82,8 @@
   (expand-file-name "~/.emacs.d/php-auto-yasnippets/Create-PHP-YASnippet.php")
   "The path to the program `Create-PHP-YASnippet.php'.")
 
-(defun payas/create-template-string (input)
-  "Takes a string of INPUT creates a snippet for it in the current buffer.
+(defun payas/create-template (input)
+  "Creates a snippet for INPUT string in the current buffer.
 
 Because this function sends output to the current buffer always
 wrap `with-temp-buffer' around calls to it, because the output
@@ -100,7 +100,7 @@ The INPUT must be the name of a PHP standard library function.
 This function creates a snippet for that function and associates
 it with `php-mode'."
   (with-temp-buffer
-    (payas/create-template-string input)
+    (payas/create-template input)
     (yas-define-snippets
      'php-mode
      (list (yas--parse-template)))))
