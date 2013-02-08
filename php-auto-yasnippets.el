@@ -39,11 +39,26 @@
 ;;
 ;;     https://github.com/ejmr/php-mode
 ;;
-;; To use this package you need to bind the utility function
-;; `yas/create-php-snippet' to a key of your choice.  Since this
-;; package requires php-mode, and since it is most useful when writing
-;; PHP code, you may want to use a key-binding that only works when
-;; using php-mode.  For example:
+;; To use php-auto-yasnippets you need to do three things.  First,
+;; place the package in your load-path (`C-h v load-path' for help)
+;; and load it from your Emacs configuration file by adding:
+;;
+;;     (require 'php-auto-yasnippets)
+;;
+;; Second, make sure the variable `php-auto-yasnippet-php-program'
+;; points to the program `Create-PHP-YASnippet.php'.  That PHP program
+;; should have come with this package; if you do not have it then you
+;; can get it from the project GitHub URL at the top of this file.
+;; You can use `setq' in your configuration file to set the variable
+;; to the proper path, e.g:
+;;
+;;     (require 'php-auto-yasnippets)
+;;     (setq php-auto-yasnippet-php-program "~/path/to/Create-PHP-YASnippet.php")
+;;
+;; Finally, bind the function `yas/create-php-snippet' to a key of
+;; your choice.  Since this package requires php-mode, and since it is
+;; most useful when writing PHP code, you may want to use a
+;; key-binding that only works when using php-mode.  For example:
 ;;
 ;;     (define-key php-mode-map (kbd "C-c C-y") 'yas/create-php-snippet)
 ;;
