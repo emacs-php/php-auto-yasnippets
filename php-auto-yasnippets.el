@@ -83,12 +83,27 @@
   "The path to the program `Create-PHP-YASnippet.php'.")
 
 (defun payas/create-template-string (input)
-  "Takes a string of INPUT and returns a string intended for the
-function `yas--parse-template'."
+  "Takes a string of INPUT creates a snippet for it in the current buffer.
+
+Because this function sends output to the current buffer always
+wrap `with-temp-buffer' around calls to it, because the output
+this function creates should go directly to the function
+`yas--parse-template', and it expects the template definition to
+be in the current buffer."
+  (call-process php-executable nil (current-buffer) nil
+                php-auto-yasnippet-php-program input))
+
+(defun payas/define-template (input)
+  "Create a snippet for INPUT.
+
+The INPUT must be the name of a PHP standard library function.
+This function creates a snippet for that function and associates
+it with `php-mode'."
   (with-temp-buffer
-    (call-process php-executable nil (current-buffer) nil
-                  php-auto-yasnippet-php-program input)
-    (buffer-string)))
+    (payas/create-template-string input)
+    (yas-define-snippets
+     'php-mode
+     (list (yas--parse-template)))))
 
 (provide 'php-auto-yasnippets)
 
