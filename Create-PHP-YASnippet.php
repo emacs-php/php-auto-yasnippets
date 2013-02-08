@@ -64,11 +64,12 @@ $snippet_chunks = [];
 foreach ($function->getParameters() as $parameter)
 {
         $snippet_chunks[] = sprintf(
-                '${%d:%s}',
+                '${%d:%s%s}',
                 // We must add one to the position because PHP starts
                 // from zero, but for the snippet we want parameter
                 // numbering to start from one.
                 $parameter->getPosition() + 1,
+                $parameter->isPassedByReference() === true ? "&" : "",
                 $parameter->getName()
         );
 }
