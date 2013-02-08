@@ -69,6 +69,24 @@ catch(ReflectionException $error)
         exit(ERROR_UNKNOWN_FUNCTION);
 }
 
+/* Snippets can have 'directives', documented here:
+ *
+ *     http://capitaomorte.github.com/yasnippet/snippet-development.html
+ *
+ * We need to create two directives: '#key' and '#name'.  They tell
+ * YASnippet what to look for to trigger the expansion of the snippet
+ * (#key) and what to show in the menu of available snippets (#name).
+ * The name of the function suffices for both of these.
+ *
+ * We put all of the directives together into a single string that we
+ * will attach to the rest of the output later.
+ */
+$snippet_directives = sprintf(
+        "#key: %s\n#name: %s\n# --\n",
+        $function_name,
+        $function_name
+);
+
 /* We assume the name of the function is already in the buffer and
  * that Emacs will append any output to that.  So we create an array
  * of strings, each representing a parameter for the function, and
@@ -90,7 +108,7 @@ foreach ($function->getParameters() as $parameter)
 }
 
 /* Now that we have built all the pieces of the snippet we can combine
- * them, wrap them in parentheses, and be done.
+ * them, wrap the parameter chunks in parentheses, and be done.
  */
-printf("(%s)", implode(", ", $snippet_chunks));
+printf("%s(%s)", $snippet_directives, implode(", ", $snippet_chunks));
 exit(SUCCESS);
