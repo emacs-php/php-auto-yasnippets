@@ -110,5 +110,9 @@ foreach ($function->getParameters() as $parameter)
 /* Now that we have built all the pieces of the snippet we can combine
  * them, wrap the parameter chunks in parentheses, and be done.
  */
-printf("%s(%s)", $snippet_directives, implode(", ", $snippet_chunks));
+printf("%s%s(%s)",
+       $snippet_directives,
+       $function_name,
+       implode(", ", $snippet_chunks));
+
 exit(SUCCESS);
