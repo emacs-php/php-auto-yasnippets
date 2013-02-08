@@ -55,8 +55,26 @@ catch(ReflectionException $error)
 }
 
 /* We assume the name of the function is already in the buffer and
- * that Emacs will append any output to that.
+ * that Emacs will append any output to that.  So we create an array
+ * of strings, each representing a parameter for the function, and
+ * then combine them in the end to create our output.
  */
-echo "()";
+$snippet_chunks = [];
 
+foreach ($function->getParameters() as $parameter)
+{
+        $snippet_chunks[] = sprintf(
+                '${%d:%s}',
+                // We must add one to the position because PHP starts
+                // from zero, but for the snippet we want parameter
+                // numbering to start from one.
+                $parameter->getPosition() + 1,
+                $parameter->getName()
+        );
+}
+
+/* Now that we have built all the pieces of the snippet we can combine
+ * them, wrap them in parentheses, and be done.
+ */
+printf("(%s)", implode(", ", $snippet_chunks));
 exit(SUCCESS);
