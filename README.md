@@ -33,7 +33,7 @@ manual uses to indicate optional parameters.  For example,
 php-auto-yasnippets will expand `filter_input` into this:
 
 ```php
-filter_input($type, $variable_name, $[filter], $[options])
+filter_input($type, $variable_name, [$filter], [$options])
 ```
 
 If you do not need the optional parameters you can delete them when

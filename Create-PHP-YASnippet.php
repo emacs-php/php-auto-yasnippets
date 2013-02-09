@@ -122,7 +122,7 @@ foreach ($function->getParameters() as $parameter)
                 $type_hint = $parameter->getClass()->getName() . " ";
         }
 
-        $name = (string) $type_hint . $parameter->getName();
+        $name = (string) $type_hint . "$" . $parameter->getName();
 
         if ($parameter->isPassedByReference())
         {
@@ -150,7 +150,7 @@ foreach ($function->getParameters() as $parameter)
         }
 
         $snippet_chunks[] = sprintf(
-                '${%d:$%s}',
+                '${%d:%s}',
                 // We must add one to the position because PHP starts
                 // from zero, but for the snippet we want parameter
                 // numbering to start from one.
