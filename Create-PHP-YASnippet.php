@@ -3,8 +3,10 @@
 /*********************************************************************
  *
  * This program accepts the name of a PHP function as a command-line
- * argument and returns a snippet containing its parameters, suitable
- * for the YASnippet package for GNU Emacs.
+ * argument and returns a 'snippet' representing that function and its
+ * parameters for use with the php-auto-yasnippets Emacs package:
+ *
+ *     https://github.com/ejmr/php-auto-yasnippets
  *
  * Copyright 2013 Eric James Michael Ritz
  *
