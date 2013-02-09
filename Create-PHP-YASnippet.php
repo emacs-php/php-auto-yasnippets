@@ -2,9 +2,10 @@
 
 /*********************************************************************
  *
- * This program accepts the name of a PHP function as a command-line
- * argument and returns a 'snippet' representing that function and its
- * parameters for use with the php-auto-yasnippets Emacs package:
+ * This program accepts the name of a standard library PHP function as
+ * a command-line argument and returns a 'snippet' representing that
+ * function and its parameters for use with the php-auto-yasnippets
+ * Emacs package:
  *
  *     https://github.com/ejmr/php-auto-yasnippets
  *
