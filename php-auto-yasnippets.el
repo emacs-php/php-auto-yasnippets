@@ -72,6 +72,7 @@
 ;; and no other script should rely on them.  They may change in future
 ;; versions without warning.
 
+(require 'thingatpt)
 (require 'php-mode)
 (require 'yasnippet)
 
@@ -108,6 +109,13 @@ it with `php-mode'."
       (yas-define-snippets
        'php-mode
        (list (yas--parse-template))))))
+
+(defun yas/create-php-snippet ()
+  "Creates an expnads a snippet for the PHP function at point."
+  (interactive)
+  (let ((function (thing-at-point 'word)))
+    (payas/define-template function)
+    (yas-expand)))
 
 (provide 'php-auto-yasnippets)
 
