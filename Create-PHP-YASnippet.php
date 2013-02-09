@@ -81,14 +81,26 @@ catch(ReflectionException $error)
  * (#key) and what to show in the menu of available snippets (#name).
  * The name of the function suffices for both of these.
  *
- * We put all of the directives together into a single string that we
- * will attach to the rest of the output later.
+ * If possible we also add the '#group' directive.  This directive
+ * will help Emacs organize the snippets into sub-menus, making it
+ * easier for the user to navigate once he starts creating a large
+ * number of snippets with this program.  PHP groups many functions
+ * into 'extensions', so we use the extension name for the group name.
+ * Thus a function like json_encode() will get the directive '#group:
+ * json'.  However, not all functions belong to an extension.  If
+ * there is no extension we do not add the '#group' directive at all.
+ *
+ * Finally we put all of the directives together into a single string
+ * that we will attach to the rest of the output later.
  */
-$snippet_directives = sprintf(
-        "#key: %s\n#name: %s\n# --\n",
-        $function_name,
-        $function_name
-);
+$snippet_directives = [];
+$snippet_directives[] = "#key: $function_name";
+$snippet_directives[] = "#name: $function_name";
+
+if ($function->getExtensionName())
+{
+        $snippet_directives[] = "#group: " . $function->getExtensionName();
+}
 
 /* We assume the name of the function is already in the buffer and
  * that Emacs will append any output to that.  So we create an array
@@ -113,8 +125,8 @@ foreach ($function->getParameters() as $parameter)
 /* Now that we have built all the pieces of the snippet we can combine
  * them, wrap the parameter chunks in parentheses, and be done.
  */
-printf("%s%s(%s)",
-       $snippet_directives,
+printf("%s\n# --\n%s(%s)",
+       implode("\n", $snippet_directives),
        $function_name,
        implode(", ", $snippet_chunks));
 
