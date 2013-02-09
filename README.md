@@ -1,6 +1,9 @@
 Automatic YASnippets for PHP in Emacs
 =====================================
 
+**Note:** *This package is usable but still under heavy, rapid
+  development.  You may want to wait for the 1.0.0 release.*
+
 The php-auto-yasnippets package for [GNU Emacs][emacs] will
 automatically create ‘snippets’ for [standard PHP functions][php].  It
 defines these snippets using the [YASnippet package][yas].  For
