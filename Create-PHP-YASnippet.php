@@ -129,8 +129,23 @@ foreach ($function->getParameters() as $parameter)
                 $name = "&" . $name;
         }
 
+        /* If a parameter is optional then we wrap it in square braces
+         * to follow the same convention as the PHP manual for
+         * denoting optional parameters.  But first we check to see if
+         * the parameter has a default value, which may be possible
+         * since it is optional.
+         */
         if ($parameter->isOptional())
         {
+                if ($parameter->isDefaultValueAvailable())
+                {
+                        $name = $name . " = " . (string) $parameter->getDefaultValue();
+                }
+                else if ($parameter->allowsNull())
+                {
+                        $name = $name . " = null";
+                }
+
                 $name = "[$name]";
         }
 
