@@ -99,11 +99,12 @@ be in the current buffer."
 The INPUT must be the name of a PHP standard library function.
 This function creates a snippet for that function and associates
 it with `php-mode'."
-  (with-temp-buffer
-    (payas/create-template input)
-    (yas-define-snippets
-     'php-mode
-     (list (yas--parse-template)))))
+  (unless (yas--get-template-by-uuid 'php-mode input)
+    (with-temp-buffer
+      (payas/create-template input)
+      (yas-define-snippets
+       'php-mode
+       (list (yas--parse-template))))))
 
 (provide 'php-auto-yasnippets)
 
