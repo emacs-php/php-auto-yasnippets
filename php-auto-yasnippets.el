@@ -66,15 +66,17 @@
 ;; will expand into a snippet containing all of the parameters, their
 ;; names, any default values, et cetera.
 
+
+
 ;;; Code:
-;;
-;; Every function beginning with 'payas/' is internal to this package
-;; and no other script should rely on them.  They may change in future
-;; versions without warning.
 
 (require 'thingatpt)
 (require 'php-mode)
 (require 'yasnippet)
+
+
+;;; This section defines constants the package uses as well as any
+;;; global variables which the user may wish to change.
 
 (defconst php-auto-yasnippet-version "0.1"
   "The version number for the php-auto-yasnippet package.")
@@ -82,6 +84,10 @@
 (defvar php-auto-yasnippet-php-program
   (expand-file-name "~/.emacs.d/php-auto-yasnippets/Create-PHP-YASnippet.php")
   "The path to the program `Create-PHP-YASnippet.php'.")
+
+
+;;; Below are all of the internal functions.  No code outside of this
+;;; file should rely on any of these functions.
 
 (defun payas/create-template (input)
   "Creates a snippet for INPUT string in the current buffer.
@@ -109,6 +115,9 @@ it with `php-mode'."
       (yas-define-snippets
        'php-mode
        (list (yas--parse-template))))))
+
+
+;;; This section contains the public API.
 
 (defun yas/create-php-snippet ()
   "Creates an expnads a snippet for the PHP function at point."
