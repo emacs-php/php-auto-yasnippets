@@ -42,7 +42,7 @@ To use php-auto-yasnippets you need to do three things.  First, place
 the package in your load-path (`C-h v load-path` for help) and load it
 from your Emacs configuration file by adding:
 
-```elisp
+```lisp
 (require 'php-auto-yasnippets)
 ```
 
@@ -52,7 +52,7 @@ have come with this package; if you do not have it then you can get it
 from the [project website][home].  You can use `setq` in your
 configuration file to set the variable to the proper path, e.g:
 
-```elisp
+```lisp
 (require 'php-auto-yasnippets)
 (setq php-auto-yasnippet-php-program "~/path/to/Create-PHP-YASnippet.php")
 ```
@@ -63,7 +63,7 @@ key-bindings.  And since the package requires php-mode, and is most
 useful when writing PHP code, you may want to use a key-binding that
 only works when using php-mode.  For example:
 
-```elisp
+```lisp
 (define-key php-mode-map (kbd "C-c C-y") 'yas/create-php-snippet)
 ```
 
