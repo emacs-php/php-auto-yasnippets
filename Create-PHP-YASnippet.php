@@ -129,6 +129,11 @@ foreach ($function->getParameters() as $parameter)
                 $name = "&" . $name;
         }
 
+        if ($parameter->isOptional())
+        {
+                $name = "[$name]";
+        }
+
         $snippet_chunks[] = sprintf(
                 '${%d:$%s}',
                 // We must add one to the position because PHP starts
