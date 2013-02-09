@@ -89,7 +89,10 @@ Because this function sends output to the current buffer always
 wrap `with-temp-buffer' around calls to it, because the output
 this function creates should go directly to the function
 `yas--parse-template', and it expects the template definition to
-be in the current buffer."
+be in the current buffer.
+
+This function runs `php-auto-yasnippet-php-program' to generate
+the snippet.  The return value is the exit code of that program."
   (call-process php-executable nil (current-buffer) nil
                 php-auto-yasnippet-php-program input))
 
