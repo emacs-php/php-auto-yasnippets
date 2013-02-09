@@ -27,6 +27,19 @@ comes with a large standard library and functions that sound similar
 sometimes require arguments in contrasting orders.  This package will
 help you avoid having to remember those corner cases.
 
+If a function has any optional parameters then php-auto-yasnippets
+will wrap them in square braces.  This is the same convention the PHP
+manual uses to indicate optional parameters.  For example,
+php-auto-yasnippets will expand `filter_input` into this:
+
+```php
+filter_input($type, $variable_name, $[filter], $[options])
+```
+
+If you do not need the optional parameters you can delete them when
+you Tab over to them.  However, you will need to manually remove the
+commas, as the package currently does not remove them automatically.
+
 
 Requirements
 ------------
