@@ -13,7 +13,7 @@ example, if you type the PHP function
 implode
 ```
 
-and press `C-c C-y` php-auto-yasnippets will expand that into
+and press `C-c C-y` then php-auto-yasnippets will expand that into
 
 ```php
 implode($glue, $pieces)
