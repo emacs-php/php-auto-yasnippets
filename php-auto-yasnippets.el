@@ -78,7 +78,7 @@
 ;;; This section defines constants the package uses as well as any
 ;;; global variables which the user may wish to change.
 
-(defconst php-auto-yasnippet-version "0.1"
+(defconst php-auto-yasnippet-version "0.3.0"
   "The version number for the php-auto-yasnippet package.")
 
 (defvar php-auto-yasnippet-php-program
