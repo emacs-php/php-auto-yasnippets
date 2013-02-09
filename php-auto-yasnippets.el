@@ -4,7 +4,7 @@
 ;;
 ;; Author: Eric James Michael Ritz
 ;; URL: https://github.com/ejmr/php-auto-yasnippets
-;; Version: 0.1
+;; Version: 0.4.0
 ;;
 ;;
 ;;
@@ -78,7 +78,7 @@
 ;;; This section defines constants the package uses as well as any
 ;;; global variables which the user may wish to change.
 
-(defconst php-auto-yasnippet-version "0.3.0"
+(defconst php-auto-yasnippet-version "0.4.0"
   "The version number for the php-auto-yasnippet package.")
 
 (defvar php-auto-yasnippet-php-program
@@ -122,7 +122,7 @@ it with `php-mode'."
 (defun yas/create-php-snippet ()
   "Creates an expnads a snippet for the PHP function at point."
   (interactive)
-  (let ((function (thing-at-point 'word)))
+  (let ((function (thing-at-point 'symbol)))
     (payas/define-template function)
     (yas-expand)))
 
