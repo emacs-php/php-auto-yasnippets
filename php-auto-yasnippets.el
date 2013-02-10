@@ -103,6 +103,23 @@ the snippet.  The return value is the exit code of that program."
   (call-process php-executable nil (current-buffer) nil
                 php-auto-yasnippet-php-program input))
 
+(defun payas/report-error (error-code)
+  "Reports an error based on the given ERROR-CODE.
+
+The ERROR-CODE is an integer representing the exit status of the
+program `php-auto-yasnippet-php-program'.  That program exits
+with zero for success and non-zero for any errors.  This function
+shows an error message based on the possible exit codes that
+program may return.  See the commentary in that program for a
+description of possible ERROR-CODE values and their meaning.
+
+If there is nothing to do for the ERROR-CODE then the function
+returns nil.  However, the function may not return at all if it
+signals an error."
+  (cond ((= error-code 1)
+         (error "Cannot run the program %s" php-auto-yasnippet-php-program))
+        (t nil)))
+
 (defun payas/define-template (input)
   "Create a snippet for INPUT.
 
@@ -111,10 +128,12 @@ This function creates a snippet for that function and associates
 it with `php-mode'."
   (unless (yas--get-template-by-uuid 'php-mode input)
     (with-temp-buffer
-      (payas/create-template input)
-      (yas-define-snippets
-       'php-mode
-       (list (yas--parse-template))))))
+      (let ((exit-code (payas/create-template input)))
+        (if (/= exit-code 0)
+            (payas/report-error exit-code))
+        (yas-define-snippets
+         'php-mode
+         (list (yas--parse-template)))))))
 
 
 ;;; This section contains the public API.
