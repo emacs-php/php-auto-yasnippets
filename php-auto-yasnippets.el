@@ -4,7 +4,7 @@
 ;;
 ;; Author: Eric James Michael Ritz
 ;; URL: https://github.com/ejmr/php-auto-yasnippets
-;; Version: 0.5.0
+;; Version: 0.6.0
 ;;
 ;;
 ;;
@@ -78,7 +78,7 @@
 ;;; This section defines constants the package uses as well as any
 ;;; global variables which the user may wish to change.
 
-(defconst php-auto-yasnippet-version "0.5.0"
+(defconst php-auto-yasnippet-version "0.6.0"
   "The version number for the php-auto-yasnippet package.")
 
 (defvar php-auto-yasnippet-php-program
