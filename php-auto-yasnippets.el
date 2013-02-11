@@ -118,6 +118,8 @@ returns nil.  However, the function may not return at all if it
 signals an error."
   (cond ((= error-code 1)
          (error "Cannot run the program %s" php-auto-yasnippet-php-program))
+        ((= error-code 2)
+         (error "No function name given to %s" php-auto-yasnippet-php-program))
         (t nil)))
 
 (defun payas/define-template (input)
