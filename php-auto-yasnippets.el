@@ -124,6 +124,21 @@ signals an error."
          (error "Cannot run the program %s" php-auto-yasnippet-php-program))
         ((= error-code 2)
          (error "No function name given to %s" php-auto-yasnippet-php-program))
+        ;; We get this error code when the PHP program exits with the
+        ;; value ERROR_UNKNOWN_FUNCTION.  That means the user tried to
+        ;; create a snippet for a function the program does not
+        ;; recognize as a standard PHP function.  So arguably we
+        ;; should report this via user-error since we could say the
+        ;; fault is on the user.  However, if we do that then we are
+        ;; making the assumption that php-auto-yasnippets made no
+        ;; mistake in selecting the function name from the buffer.  It
+        ;; is possible that the function is not recognized because we
+        ;; screwed up and did not send the complete function name.  So
+        ;; until we are completely confident about that aspect of the
+        ;; code we will treat this as an error on our part and not as
+        ;; a mistake by the user.
+        ((= error-code 3)
+         (error "%s is not a recognized PHP function" user-input))
         (t nil)))
 
 (defun payas/define-template (input)
