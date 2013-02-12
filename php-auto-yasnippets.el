@@ -160,7 +160,7 @@ it with `php-mode'."
 ;;; This section contains the public API.
 
 (defun yas/create-php-snippet ()
-  "Creates an expnads a snippet for the PHP function at point."
+  "Creates and expands a snippet for the PHP function at point."
   (interactive)
   (let ((function (thing-at-point 'symbol)))
     (payas/define-template function)
