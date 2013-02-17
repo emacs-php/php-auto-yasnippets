@@ -67,7 +67,7 @@ try
 {
         $function = new ReflectionFunction($function_name);
 }
-catch(ReflectionException $error)
+catch (ReflectionException $error)
 {
         exit(ERROR_UNKNOWN_FUNCTION);
 }
