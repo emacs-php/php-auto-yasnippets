@@ -92,6 +92,11 @@
 (defun payas/create-template (input)
   "Creates a snippet for INPUT string in the current buffer.
 
+INPUT should be either the name of a PHP function, or the name of
+a PHP method followed by the name of the class implementing it,
+separated by a space.  For example, \"json_decode\" for a
+function or \"push SplQueue\" for a method and class.
+
 Because this function sends output to the current buffer always
 wrap `with-temp-buffer' around calls to it, because the output
 this function creates should go directly to the function
@@ -100,8 +105,14 @@ be in the current buffer.
 
 This function runs `php-auto-yasnippet-php-program' to generate
 the snippet.  The return value is the exit code of that program."
-  (call-process php-executable nil (current-buffer) nil
-                php-auto-yasnippet-php-program input))
+  (save-match-data
+    (let* ((input-chunks (split-string input))
+           (function-or-method-name (first input-chunks))
+           (class-name (or (second input-chunks) "")))
+      (call-process php-executable nil (current-buffer) nil
+                    php-auto-yasnippet-php-program
+                    function-or-method-name
+                    class-name))))
 
 (defun payas/report-error (error-code &optional user-input)
   "Reports an error based on the given ERROR-CODE.
