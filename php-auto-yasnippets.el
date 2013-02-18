@@ -150,6 +150,15 @@ signals an error."
         ;; a mistake by the user.
         ((= error-code 3)
          (error "%s is not a recognized PHP function" user-input))
+        ;; If we get this error code, ERROR_UNKNOWN_METHOD, then we
+        ;; can reformat user-input to use PHP's notation for a
+        ;; better-looking error message.
+        ((= error-code 4)
+         (let* ((input-chunks (split-string user-input))
+                (method-name (concat (second input-chunks)
+                                     "::"
+                                     (first input-chunks))))
+           (error "%s is not a recognized PHP method" method-name)))
         (t nil)))
 
 (defun payas/define-template (input)
