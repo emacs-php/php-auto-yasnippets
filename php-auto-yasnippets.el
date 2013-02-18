@@ -4,7 +4,7 @@
 ;;
 ;; Author: Eric James Michael Ritz
 ;; URL: https://github.com/ejmr/php-auto-yasnippets
-;; Version: 0.6.0
+;; Version: 0.7.0
 ;;
 ;;
 ;;
@@ -64,7 +64,11 @@
 ;;
 ;; Now if you type the name of a PHP function and press `C-c C-y' it
 ;; will expand into a snippet containing all of the parameters, their
-;; names, any default values, et cetera.
+;; names, any default values, et cetera.  If you type the name of a
+;; method then you need to tell the package the name of the class that
+;; implements that method, otherwise it will not be able to create the
+;; snippet.  Using the prefix command, e.g. `C-u C-c C-y', prompts for
+;; the class name in the minibuffer.
 
 
 
@@ -78,7 +82,7 @@
 ;;; This section defines constants the package uses as well as any
 ;;; global variables which the user may wish to change.
 
-(defconst php-auto-yasnippet-version "0.6.0"
+(defconst php-auto-yasnippet-version "0.7.0"
   "The version number for the php-auto-yasnippet package.")
 
 (defvar php-auto-yasnippet-php-program
@@ -92,6 +96,11 @@
 (defun payas/create-template (input)
   "Creates a snippet for INPUT string in the current buffer.
 
+INPUT should be either the name of a PHP function, or the name of
+a PHP method followed by the name of the class implementing it,
+separated by a space.  For example, \"json_decode\" for a
+function or \"push SplQueue\" for a method and class.
+
 Because this function sends output to the current buffer always
 wrap `with-temp-buffer' around calls to it, because the output
 this function creates should go directly to the function
@@ -100,8 +109,14 @@ be in the current buffer.
 
 This function runs `php-auto-yasnippet-php-program' to generate
 the snippet.  The return value is the exit code of that program."
-  (call-process php-executable nil (current-buffer) nil
-                php-auto-yasnippet-php-program input))
+  (save-match-data
+    (let* ((input-chunks (split-string input))
+           (function-or-method-name (first input-chunks))
+           (class-name (or (second input-chunks) "")))
+      (call-process php-executable nil (current-buffer) nil
+                    php-auto-yasnippet-php-program
+                    function-or-method-name
+                    class-name))))
 
 (defun payas/report-error (error-code &optional user-input)
   "Reports an error based on the given ERROR-CODE.
@@ -139,6 +154,15 @@ signals an error."
         ;; a mistake by the user.
         ((= error-code 3)
          (error "%s is not a recognized PHP function" user-input))
+        ;; If we get this error code, ERROR_UNKNOWN_METHOD, then we
+        ;; can reformat user-input to use PHP's notation for a
+        ;; better-looking error message.
+        ((= error-code 4)
+         (let* ((input-chunks (split-string user-input))
+                (method-name (concat (second input-chunks)
+                                     "::"
+                                     (first input-chunks))))
+           (error "%s is not a recognized PHP method" method-name)))
         (t nil)))
 
 (defun payas/define-template (input)
@@ -159,11 +183,20 @@ it with `php-mode'."
 
 ;;; This section contains the public API.
 
-(defun yas/create-php-snippet ()
-  "Creates and expands a snippet for the PHP function at point."
-  (interactive)
-  (let ((function (thing-at-point 'symbol)))
-    (payas/define-template function)
+(defun yas/create-php-snippet (prefix)
+  "Creates and expands a snippet for the PHP function at point.
+
+If called with the universal prefix then it prompts the user for
+the name of a PHP class and treats the name at point as the name
+of a method for that class."
+  (interactive "P")
+  (let ((function (thing-at-point 'symbol))
+        (class
+         (if prefix
+             (read-from-minibuffer "Class: "))))
+    (if class
+        (payas/define-template (concat function " " class))
+      (payas/define-template function))
     (yas-expand)))
 
 (provide 'php-auto-yasnippets)

@@ -40,6 +40,11 @@ If you do not need the optional parameters you can delete them when
 you Tab over to them.  However, you will need to manually remove the
 commas, as the package currently does not remove them automatically.
 
+You can use the prefix command to expand method names.  When you use
+the prefix, u.g. `C-u C-c C-y`, the package will ask you for the name
+of the class which implements that method.  This information is
+necessary in order to generate the correct snippet.
+
 
 Requirements
 ------------
