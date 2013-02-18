@@ -2,12 +2,16 @@
 
 /*********************************************************************
  *
- * This program accepts the name of a standard library PHP function as
- * a command-line argument and returns a 'snippet' representing that
- * function and its parameters for use with the php-auto-yasnippets
- * Emacs package:
+ * This program accepts the name of a standard library PHP function or
+ * method as a command-line argument and returns a 'snippet'
+ * representing that function and its parameters for use with the
+ * php-auto-yasnippets Emacs package:
  *
  *     https://github.com/ejmr/php-auto-yasnippets
+ *
+ * If the first command-line argument is a method then the program
+ * must also receive a second argument: the name of the class that
+ * implements that method.
  *
  * Copyright 2013 Eric James Michael Ritz
  *
@@ -38,6 +42,7 @@ define("SUCCESS", 0);
 define("ERROR_NOT_CLI", 1);
 define("ERROR_MISSING_ARGUMENT", 2);
 define("ERROR_UNKNOWN_FUNCTION", 3);
+define("ERROR_UNKNOWN_METHOD", 4);
 
 /* We only want to be able to run this from the command-line.  It
  * should be fine to run as part of another SAPI as well, but honestly
@@ -63,13 +68,42 @@ if ($argc < 2)
  * may throw if the function is unrecognized.
  */
 $function_name = (string) $argv[1];
+
 try
 {
         $function = new ReflectionFunction($function_name);
 }
 catch (ReflectionException $error)
 {
-        exit(ERROR_UNKNOWN_FUNCTION);
+        /* Creating a ReflectionFunction object will fail if
+         * $function_name represents the name of a class method.  If
+         * that is the case then the program should have received a
+         * second argument, the class implementing that method.
+         *
+         * If we have another command-line argument we treat that
+         * as a class name and try to get reflection data for a second
+         * time by treating $function_name as a method.
+         */
+        if ($argc >= 3)
+        {
+                try
+                {
+                        $class_name = (string) $argv[2];
+                        $function = new ReflectionMethod($class_name, $function_name);
+                }
+                catch (ReflectionException $error)
+                {
+                        exit(ERROR_UNKNOWN_METHOD);
+                }
+        }
+        /* Without a class name to use we cannot get any method
+         * information, so if we get to this point then we have to
+         * assume we just do not know the function.
+         */
+        else
+        {
+                exit(ERROR_UNKNOWN_FUNCTION);
+        }
 }
 
 /* Snippets can have 'directives', documented here:
