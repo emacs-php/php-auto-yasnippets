@@ -179,11 +179,20 @@ it with `php-mode'."
 
 ;;; This section contains the public API.
 
-(defun yas/create-php-snippet ()
-  "Creates and expands a snippet for the PHP function at point."
-  (interactive)
-  (let ((function (thing-at-point 'symbol)))
-    (payas/define-template function)
+(defun yas/create-php-snippet (prefix)
+  "Creates and expands a snippet for the PHP function at point.
+
+If called with the universal prefix then it prompts the user for
+the name of a PHP class and treats the name at point as the name
+of a method for that class."
+  (interactive "P")
+  (let ((function (thing-at-point 'symbol))
+        (class
+         (if prefix
+             (read-from-minibuffer "Class: "))))
+    (if class
+        (payas/define-template (concat function " " class))
+      (payas/define-template function))
     (yas-expand)))
 
 (provide 'php-auto-yasnippets)
