@@ -115,15 +115,6 @@ catch (ReflectionException $error)
  * (#key) and what to show in the menu of available snippets (#name).
  * The name of the function suffices for both of these.
  *
- * If possible we also add the '#group' directive.  This directive
- * will help Emacs organize the snippets into sub-menus, making it
- * easier for the user to navigate once he starts creating a large
- * number of snippets with this program.  PHP groups many functions
- * into 'extensions', so we use the extension name for the group name.
- * Thus a function like json_encode() will get the directive '#group:
- * json'.  However, not all functions belong to an extension.  If
- * there is no extension we do not add the '#group' directive at all.
- *
  * Finally we put all of the directives together into a single string
  * that we will attach to the rest of the output later.
  */
@@ -131,9 +122,31 @@ $snippet_directives = [];
 $snippet_directives[] = "#key: $function_name";
 $snippet_directives[] = "#name: $function_name";
 
+/* If possible we also add the '#group' directive.  This directive
+ * will help Emacs organize the snippets into sub-menus, making it
+ * easier for the user to navigate once he starts creating a large
+ * number of snippets with this program.  PHP groups many functions
+ * into 'extensions', so we use the extension name for the group name.
+ * Thus a function like json_encode() will get the directive '#group:
+ * json'.  If $function actually represents a method then we also try
+ * to add the name of the class to the group, creating a sub-group
+ * using that class name.
+ *
+ * However, not all functions and methods belong to an extension.  For
+ * methods we still use the class name for the group in the absence of
+ * an extension name.  But for functions we omit the '#group'
+ * directive if there is no extension name.
+ */
 if ($function->getExtensionName())
 {
-        $snippet_directives[] = "#group: " . $function->getExtensionName();
+        $group_directive = "#group: " . $function->getExtensionName();
+
+        if ($function instanceof ReflectionMethod)
+        {
+                $group_directive .= "." . $function->getDeclaringClass()->getName();
+        }
+
+        $snippet_directives[] = $group_directive;
 }
 
 /* We assume the name of the function is already in the buffer and
