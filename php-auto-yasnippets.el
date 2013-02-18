@@ -64,7 +64,11 @@
 ;;
 ;; Now if you type the name of a PHP function and press `C-c C-y' it
 ;; will expand into a snippet containing all of the parameters, their
-;; names, any default values, et cetera.
+;; names, any default values, et cetera.  If you type the name of a
+;; method then you need to tell the package the name of the class that
+;; implements that method, otherwise it will not be able to create the
+;; snippet.  Using the prefix command, e.g. `C-u C-c C-y', prompts for
+;; the class name in the minibuffer.
 
 
 
