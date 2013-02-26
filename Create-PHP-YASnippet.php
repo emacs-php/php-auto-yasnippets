@@ -146,7 +146,13 @@ if ($function->getExtensionName())
 
 if ($function instanceof ReflectionMethod)
 {
-        $group_name_pieces[] = $function->getDeclaringClass()->getName();
+        $class_name = $function->getDeclaringClass()->getName();
+
+        /* If the class name belongs to a namespace then we create
+         * further sub-groups to reflect that.
+         */
+        str_replace("\\", ".", $class_name);
+        $group_name_pieces[] = $class_name;
 }
 
 if (count($group_name_pieces) > 0)
