@@ -90,8 +90,10 @@
   "The path to the program `Create-PHP-YASnippet.php'.")
 
 
-;;; Below are all of the internal functions.  No code outside of this
-;;; file should rely on any of these functions.
+;;; Below are all of the internal functions.  All of these functions
+;;; begin with the 'payas' prefix in their name, short for 'PHP Auto
+;;; YASnippets'.  No code outside of this file should rely on any of
+;;; these functions.
 
 (defun payas/create-template (input)
   "Creates a snippet for INPUT string in the current buffer.
