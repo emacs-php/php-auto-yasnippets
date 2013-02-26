@@ -90,6 +90,12 @@ expand into a snippet containing all of the parameters, their names,
 any default values, et cetera.
 
 
+Miscellaneous
+-------------
+
+This package uses [Semantic Versioning][semver].
+
+
 License
 -------
 
@@ -105,3 +111,4 @@ Copyright 2013 Eric James Michael Ritz
 [php-mode]: https://github.com/ejmr/php-mode
 [gpl]: http://www.gnu.org/copyleft/gpl.html
 [home]: https://github.com/ejmr/php-auto-yasnippets
+[semver]: http://semver.org/
