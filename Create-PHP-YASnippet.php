@@ -137,16 +137,24 @@ $snippet_directives[] = "#name: $function_name";
  * an extension name.  But for functions we omit the '#group'
  * directive if there is no extension name.
  */
+$group_name_pieces = [];
+
 if ($function->getExtensionName())
 {
-        $group_directive = "#group: " . $function->getExtensionName();
+        $group_name_pieces[] = $function->getExtensionName();
+}
 
-        if ($function instanceof ReflectionMethod)
-        {
-                $group_directive .= "." . $function->getDeclaringClass()->getName();
-        }
+if ($function instanceof ReflectionMethod)
+{
+        $group_name_pieces[] = $function->getDeclaringClass()->getName();
+}
 
-        $snippet_directives[] = $group_directive;
+if (count($group_name_pieces) > 0)
+{
+        $snippet_directives[] = sprintf(
+                "#group: %s",
+                implode(".", $group_name_pieces)
+        );
 }
 
 /* We assume the name of the function is already in the buffer and
