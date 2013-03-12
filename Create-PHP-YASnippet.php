@@ -49,7 +49,7 @@ define("ERROR_UNKNOWN_METHOD", 4);
  * who knows.  Better to lock this up as tightly as possible than to
  * find out later that it creates an obscure security hole.
  */
-if (PHP_SAPI !== "cli")
+if (PHP_SAPI !== "cli" || $_SERVER["SERVER_NAME"] !== NULL)
 {
         exit(ERROR_NOT_CLI);
 }
