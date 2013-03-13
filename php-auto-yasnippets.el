@@ -182,6 +182,27 @@ it with `php-mode'."
          'php-mode
          (list (yas--parse-template)))))))
 
+(defun payas/remove-extra-whitespace ()
+  "Remove whitespace before a function's closing parenthesis.
+
+After expanding a snippet the user can press `C-d' to the
+parameter at the point.  This is most useful for optional
+parameters in PHP functions.  But this behavior leaves too much
+whitespace for each parameter the user deletes.  This function
+cleans up that whitespace so that the PHP code looks better."
+  ;; After we're done with a snippet we back up to the first word
+  ;; character, delete everything up to and including the closing
+  ;; parenthesis, and then reinsert that parenthesis.  This gets rid
+  ;; of extra whitespace that would otherwise remain.
+  (save-excursion
+    (re-search-backward "\\w")
+    (forward-char 1)
+    (zap-to-char 1 ?\))
+    (insert-char ?\))))
+
+;; Perform whitespace cleanup after expanding a snippet.
+(add-to-list 'yas-after-exit-snippet-hook #'payas/remove-extra-whitespace)
+
 
 ;;; This section contains the public API.
 
