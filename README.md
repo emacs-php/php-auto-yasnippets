@@ -1,9 +1,6 @@
 Automatic YASnippets for PHP in Emacs
 =====================================
 
-**Note:** *This package is usable but still under heavy, rapid
-  development.  You may want to wait for the 1.0.0 release.*
-
 The php-auto-yasnippets package for [GNU Emacs][emacs] will
 automatically create ‘snippets’ for [standard PHP functions][php].  It
 defines these snippets using the [YASnippet package][yas].  For
@@ -36,9 +33,8 @@ php-auto-yasnippets will expand `filter_input` into this:
 filter_input($type, $variable_name, [$filter], [$options])
 ```
 
-If you do not need the optional parameters you can delete them when
-you Tab over to them.  However, you will need to manually remove the
-commas, as the package currently does not remove them automatically.
+If you do not need the optional parameters you can delete them by
+pressing `C-d` `when you Tab over to them.
 
 You can use the prefix command to expand method names.  When you use
 the prefix, u.g. `C-u C-c C-y`, the package will ask you for the name
