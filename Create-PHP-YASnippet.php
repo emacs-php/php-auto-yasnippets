@@ -211,7 +211,7 @@ foreach ($function->getParameters() as $parameter)
         }
 
         $snippet_chunks[] = sprintf(
-                '${%d:%s}',
+                '${%d:%s,}',
                 // We must add one to the position because PHP starts
                 // from zero, but for the snippet we want parameter
                 // numbering to start from one.
@@ -226,6 +226,6 @@ foreach ($function->getParameters() as $parameter)
 printf("%s\n# --\n%s(%s)",
        implode("\n", $snippet_directives),
        $function_name,
-       implode(", ", $snippet_chunks));
+       implode(" ", $snippet_chunks));
 
 exit(SUCCESS);
