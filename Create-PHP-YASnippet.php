@@ -118,7 +118,7 @@ catch (ReflectionException $error)
  * Finally we put all of the directives together into a single string
  * that we will attach to the rest of the output later.
  */
-$snippet_directives = [];
+$snippet_directives = array();
 $snippet_directives[] = "#key: $function_name";
 $snippet_directives[] = "#name: $function_name";
 
@@ -137,7 +137,7 @@ $snippet_directives[] = "#name: $function_name";
  * an extension name.  But for functions we omit the '#group'
  * directive if there is no extension name.
  */
-$group_name_pieces = [];
+$group_name_pieces = array();
 
 if ($function->getExtensionName())
 {
@@ -168,7 +168,7 @@ if (count($group_name_pieces) > 0)
  * of strings, each representing a parameter for the function, and
  * then combine them in the end to create our output.
  */
-$snippet_chunks = [];
+$snippet_chunks = array();
 
 foreach ($function->getParameters() as $parameter)
 {
