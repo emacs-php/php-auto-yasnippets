@@ -45,6 +45,7 @@ necessary in order to generate the correct snippet.
 Requirements
 ------------
 
+* PHP 5.3 or later
 * [YASnippet][yas]
 * [php-mode][php-mode]
 
