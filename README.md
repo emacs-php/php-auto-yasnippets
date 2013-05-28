@@ -34,7 +34,7 @@ filter_input($type, $variable_name, [$filter], [$options])
 ```
 
 If you do not need the optional parameters you can delete them by
-pressing `C-d` `when you Tab over to them.
+pressing `C-d` when you Tab over to them.
 
 You can use the prefix command to expand method names.  When you use
 the prefix, u.g. `C-u C-c C-y`, the package will ask you for the name
