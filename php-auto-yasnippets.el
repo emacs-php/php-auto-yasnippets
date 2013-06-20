@@ -195,15 +195,15 @@ parameter at the point.  This is most useful for optional
 parameters in PHP functions.  But this behavior leaves too much
 whitespace for each parameter the user deletes.  This function
 cleans up that whitespace so that the PHP code looks better."
-  ;; After we're done with a snippet we back up to the first word
-  ;; character, delete everything up to and including the closing
-  ;; parenthesis, and then reinsert that parenthesis.  This gets rid
-  ;; of extra whitespace that would otherwise remain.
+  ;; After we're done with a snippet we move in front of the closing
+  ;; bracket and remove any whitespace between here and the final
+  ;; parameter. If a trailing comma is left it is also deleted.
   (save-excursion
-    (re-search-backward "\\w")
-    (forward-char 1)
-    (zap-to-char 1 ?\))
-    (insert-char ?\))))
+    (backward-char 1)
+    (delete-horizontal-space)
+    (backward-char 1)
+    (if (looking-at-p ",")
+        (delete-char 1))))
 
 ;; Perform whitespace cleanup after expanding a snippet.
 (add-to-list 'yas-after-exit-snippet-hook #'payas/remove-extra-whitespace)
