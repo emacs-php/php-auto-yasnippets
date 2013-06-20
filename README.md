@@ -87,6 +87,12 @@ expand into a snippet containing all of the parameters, their names,
 any default values, et cetera.
 
 
+Contributors
+------------
+
+* [Glynn Forrest](http://glynnforrest.com)
+
+
 Miscellaneous
 -------------
 
