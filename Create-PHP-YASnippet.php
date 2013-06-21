@@ -166,7 +166,11 @@ if (count($group_name_pieces) > 0)
 /* We assume the name of the function is already in the buffer and
  * that Emacs will append any output to that.  So we create an array
  * of strings, each representing a parameter for the function, and
- * then combine them in the end to create our output.
+ * then combine them in the end to create our output.  The program
+ * creates an entire snippet definition, including required metadata,
+ * but the strings in $snippet_chunks make up the text that will
+ * actually appear in Emacs, i.e. $snippet_chunks is the function or
+ * method expansion that we show the user.
  */
 $snippet_chunks = array();
 
