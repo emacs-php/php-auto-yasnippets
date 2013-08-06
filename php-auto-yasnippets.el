@@ -86,7 +86,8 @@
   "The version number for the php-auto-yasnippet package.")
 
 (defvar php-auto-yasnippet-php-program
-  (expand-file-name "~/.emacs.d/php-auto-yasnippets/Create-PHP-YASnippet.php")
+  (let ((current (or load-file-name (buffer-file-name))))
+    (expand-file-name "Create-PHP-YASnippet.php" (file-name-directory current)))
   "The path to the program `Create-PHP-YASnippet.php'.")
 
 
