@@ -176,6 +176,8 @@ signals an error."
 The INPUT must be the name of a PHP standard library function.
 This function creates a snippet for that function and associates
 it with `php-mode'."
+  (unless (gethash 'php-mode yas--tables)
+    (yas--table-get-create 'php-mode))
   (unless (yas--get-template-by-uuid 'php-mode input)
     (with-temp-buffer
       (let ((exit-code (payas/create-template input)))
