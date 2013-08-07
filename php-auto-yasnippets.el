@@ -5,6 +5,7 @@
 ;; Author: Eric James Michael Ritz
 ;; URL: https://github.com/ejmr/php-auto-yasnippets
 ;; Version: 1.1.0
+;; Package-Requires: ((php-mode "1.11") (yasnippet "0.8.0"))
 ;;
 ;;
 ;;
