@@ -102,9 +102,6 @@ Miscellaneous
 
 This package uses [Semantic Versioning][semver].
 
-See the [ChangeLog](./ChangeLog.md) for information about the changes
-in each version.
-
 
 License
 -------
