@@ -211,6 +211,7 @@ cleans up that whitespace so that the PHP code looks better."
 
 ;;; This section contains the public API.
 
+;;;###autoload
 (defun yas/create-php-snippet (prefix)
   "Creates and expands a snippet for the PHP function at point.
 
