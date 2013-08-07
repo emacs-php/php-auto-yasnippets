@@ -91,6 +91,7 @@ Contributors
 ------------
 
 * [Glynn Forrest](http://glynnforrest.com)
+* [Yasuyuki Oka](http://yasuyk.github.io/)
 
 
 Miscellaneous
