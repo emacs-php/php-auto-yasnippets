@@ -64,8 +64,11 @@ from your Emacs configuration file by adding:
 Second, make sure the variable `php-auto-yasnippet-php-program` points
 to the program `Create-PHP-YASnippet.php`.  That PHP program should
 have come with this package; if you do not have it then you can get it
-from the [project website][home].  You can use `setq` in your
-configuration file to set the variable to the proper path, e.g:
+from the [project website][home].  By default php-auto-yasnippets will
+search for the PHP program in the same directory as the Elisp code,
+i.e. the `php-auto-yasnippets.el`.  If you want to put the PHP program
+in another place then use `setq` in your configuration file to set the
+variable to the proper path, e.g:
 
 ```lisp
 (require 'php-auto-yasnippets)

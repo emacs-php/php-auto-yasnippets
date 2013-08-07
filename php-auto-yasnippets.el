@@ -48,9 +48,11 @@
 ;; Second, make sure the variable `php-auto-yasnippet-php-program'
 ;; points to the program `Create-PHP-YASnippet.php'.  That PHP program
 ;; should have come with this package; if you do not have it then you
-;; can get it from the project GitHub URL at the top of this file.
-;; You can use `setq' in your configuration file to set the variable
-;; to the proper path, e.g:
+;; can get it from the project GitHub URL at the top of this file.  By
+;; default this package looks for the PHP program in the same
+;; directory as this Elisp file.  You can use `setq' in your
+;; configuration file to set the variable to the proper path if the
+;; PHP program is in a different directory, e.g:
 ;;
 ;;     (require 'php-auto-yasnippets)
 ;;     (setq php-auto-yasnippet-php-program "~/path/to/Create-PHP-YASnippet.php")
