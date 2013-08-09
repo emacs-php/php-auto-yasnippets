@@ -58,6 +58,10 @@
 ;;     (require 'php-auto-yasnippets)
 ;;     (setq php-auto-yasnippet-php-program "~/path/to/Create-PHP-YASnippet.php")
 ;;
+;; Third, setup yasnippet hook for php-auto-yasnippets on php-mode.
+;;
+;;     (add-hook 'php-mode 'payas-yas-hook-setup)
+;;
 ;; Finally, bind the function `yas/create-php-snippet' to a key of
 ;; your choice.  Since this package requires php-mode, and since it is
 ;; most useful when writing PHP code, you may want to use a
@@ -92,6 +96,9 @@
   (let ((current (or load-file-name (buffer-file-name))))
     (expand-file-name "Create-PHP-YASnippet.php" (file-name-directory current)))
   "The path to the program `Create-PHP-YASnippet.php'.")
+
+(defvar php-auto-yasnippet-executing nil
+  "Non-nil means `yas/create-php-snippet' is now working.")
 
 
 ;;; Below are all of the internal functions.  All of these functions
@@ -199,18 +206,22 @@ cleans up that whitespace so that the PHP code looks better."
   ;; After we're done with a snippet we move in front of the closing
   ;; bracket and remove any whitespace between here and the final
   ;; parameter. If a trailing comma is left it is also deleted.
-  (save-excursion
-    (backward-char 1)
-    (delete-horizontal-space)
-    (backward-char 1)
-    (if (looking-at-p ",")
-        (delete-char 1))))
-
-;; Perform whitespace cleanup after expanding a snippet.
-(add-to-list 'yas-after-exit-snippet-hook #'payas/remove-extra-whitespace)
+  (when php-auto-yasnippet-executing
+    (save-excursion
+      (backward-char 1)
+      (delete-horizontal-space)
+      (backward-char 1)
+      (if (looking-at-p ",")
+          (delete-char 1)))
+    (setq php-auto-yasnippet-executing nil)))
 
 
 ;;; This section contains the public API.
+
+;;;###autoload
+(defun payas-yas-hook-setup ()
+  "Setup yasnippet hook for php-auto-yasnippet."
+  (add-hook 'yas-after-exit-snippet-hook #'payas/remove-extra-whitespace nil 'local))
 
 ;;;###autoload
 (defun yas/create-php-snippet (prefix)
@@ -227,6 +238,7 @@ of a method for that class."
     (if class
         (payas/define-template (concat function " " class))
       (payas/define-template function))
+    (setq php-auto-yasnippet-executing t)
     (yas-expand)))
 
 (provide 'php-auto-yasnippets)
