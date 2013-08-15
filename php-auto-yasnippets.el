@@ -247,9 +247,12 @@ cleans up that whitespace so that the PHP code looks better."
 ;;; This section contains the public API.
 
 ;;;###autoload
-(defun payas-yas-hook-setup ()
+(defun yas/initialize ()
   "Setup yasnippet hook for php-auto-yasnippet."
   (add-hook 'yas-after-exit-snippet-hook #'payas/remove-extra-whitespace nil 'local))
+
+;;;###autoload
+(eval-after-load 'yasnippet '(yas/initialize))
 
 ;;;###autoload
 (defun yas/create-php-snippet (prefix)
