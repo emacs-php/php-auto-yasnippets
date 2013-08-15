@@ -249,7 +249,7 @@ cleans up that whitespace so that the PHP code looks better."
 ;;;###autoload
 (defun yas/initialize ()
   "Setup yasnippet hook for php-auto-yasnippet."
-  (add-hook 'yas-after-exit-snippet-hook #'payas/remove-extra-whitespace nil 'local))
+  (add-hook 'yas-after-exit-snippet-hook #'payas/remove-extra-whitespace))
 
 ;;;###autoload
 (eval-after-load 'yasnippet '(yas/initialize))
