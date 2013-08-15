@@ -97,6 +97,34 @@
     (expand-file-name "Create-PHP-YASnippet.php" (file-name-directory current)))
   "The path to the program `Create-PHP-YASnippet.php'.")
 
+;;; We use this variable to restrict the effects of the
+;;; payas/remove-extra-whitespace function.  YASnippets lets us assign
+;;; a hook to run after the expansion of each snippet.  We use that
+;;; payas/remove-extra-whitespace hook to get rid of extra whitespace
+;;; from the PHP snippets this package creates.
+;;;
+;;; However, the problem is we install payas/remove-extra-whitespace
+;;; as a hook for YASnippets to execute after expanding *any* snippet.
+;;; That means our function runs for snippets that have absolutely
+;;; nothing to do with this package or PHP.  This is undesirable
+;;; because our hook could mess up the behavior of other snippets by
+;;; erroneously 'cleaning up' their whitespace.
+;;;
+;;; Ideally we only want YASnippets to run our hook if we are
+;;; expanding a snippet created by this package.  To achieve this we
+;;; use this php-auto-yasnippet-executing variable.  We set the
+;;; variable to true inside of the primary public API function:
+;;; yas/create-php-snippet, i.e. when the user generates a snippet
+;;; with this package.  Then the payas/remove-extra-whitespace hook
+;;; will test for this variable; if it has a true value, meaning we
+;;; just ran yas/create-php-snippet, then the hook will perform its
+;;; clean-up and then set the variable back to a nil value so that our
+;;; hook only takes effect once after each call to
+;;; yas/create-php-snippet.
+;;;
+;;; The ultimate effect is that payas/remove-extra-whitespace only
+;;; affects snippets expanding via yas/create-php-snippet, limiting
+;;; the hook's behavior to snippets this package creates.
 (defvar php-auto-yasnippet-executing nil
   "Non-nil means `yas/create-php-snippet' is now working.")
 
