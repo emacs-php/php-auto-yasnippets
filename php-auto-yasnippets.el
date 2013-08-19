@@ -58,10 +58,6 @@
 ;;     (require 'php-auto-yasnippets)
 ;;     (setq php-auto-yasnippet-php-program "~/path/to/Create-PHP-YASnippet.php")
 ;;
-;; Third, setup yasnippet hook for php-auto-yasnippets on php-mode.
-;;
-;;     (add-hook 'php-mode 'payas-yas-hook-setup)
-;;
 ;; Finally, bind the function `yas/create-php-snippet' to a key of
 ;; your choice.  Since this package requires php-mode, and since it is
 ;; most useful when writing PHP code, you may want to use a
