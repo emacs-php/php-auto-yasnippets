@@ -43,6 +43,7 @@ define("ERROR_NOT_CLI", 1);
 define("ERROR_MISSING_ARGUMENT", 2);
 define("ERROR_UNKNOWN_FUNCTION", 3);
 define("ERROR_UNKNOWN_METHOD", 4);
+define("ERROR_REQUIRED_FILE_MISSING", 5);
 
 /* We only want to be able to run this from the command-line.  It
  * should be fine to run as part of another SAPI as well, but honestly
@@ -54,12 +55,42 @@ if (PHP_SAPI !== "cli" || isset($_SERVER["SERVER_NAME"]))
         exit(ERROR_NOT_CLI);
 }
 
+$args = array();
+$required_files = array();
+$next_arg_is_required_file = false;
+foreach ($argv as $arg)
+{
+        if ($next_arg_is_required_file)
+        {
+                $required_files[] = $arg;
+                $next_arg_is_required_file = false;
+        }
+        elseif ($arg === '--require-once')
+        {
+                $next_arg_is_required_file = true;
+        }
+        else
+        {
+                $args[] = $arg;
+        }
+}
+
+
 /* We have the right number of arguments?  We should have two at a
  * minimum: the name of the program itself, and the function name.
  */
-if ($argc < 2)
+if ($args < 2)
 {
         exit(ERROR_MISSING_ARGUMENT);
+}
+
+foreach ($required_files as $file)
+{
+    if (! is_file($file)) {
+        exit(ERROR_REQUIRED_FILE_MISSING);
+    }
+
+    require_once $file;
 }
 
 /* If we get to here then we have a name on the command-line.  It may
@@ -67,7 +98,7 @@ if ($argc < 2)
  * the ReflectionFunction object we need to check for the exception it
  * may throw if the function is unrecognized.
  */
-$function_name = (string) $argv[1];
+$function_name = (string) $args[1];
 
 try
 {
@@ -88,7 +119,7 @@ catch (ReflectionException $error)
         {
                 try
                 {
-                        $class_name = (string) $argv[2];
+                        $class_name = (string) $args[2];
                         $function = new ReflectionMethod($class_name, $function_name);
                 }
                 catch (ReflectionException $error)
