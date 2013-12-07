@@ -124,6 +124,11 @@
 (defvar php-auto-yasnippet-executing nil
   "Non-nil means `yas/create-php-snippet' is now working.")
 
+(defvar php-auto-yasnippet-required-files nil
+  "List of files on disk to include when creating a PHP snippet.
+This makes it possible to generate snippets for user code.
+It's probably best to set this per-project via .dir-locals.")
+
 
 ;;; Below are all of the internal functions.  All of these functions
 ;;; begin with the 'payas' prefix in their name, short for 'PHP Auto
@@ -149,11 +154,16 @@ the snippet.  The return value is the exit code of that program."
   (save-match-data
     (let* ((input-chunks (split-string input))
            (function-or-method-name (first input-chunks))
-           (class-name (or (second input-chunks) "")))
-      (call-process php-executable nil (current-buffer) nil
-                    php-auto-yasnippet-php-program
-                    function-or-method-name
-                    class-name))))
+           (class-name (or (second input-chunks) ""))
+           (args (list php-executable nil (current-buffer) nil php-auto-yasnippet-php-program)))
+
+      (setq command-args (list function-or-method-name class-name))
+      (dolist (elt php-auto-yasnippet-required-files command-args)
+        (setq command-args (cons elt command-args))
+        (setq command-args (cons "--require-once" command-args)))
+
+      (setq args (append args command-args))
+      (apply 'call-process args))))
 
 (defun payas/report-error (error-code &optional user-input)
   "Reports an error based on the given ERROR-CODE.
@@ -177,18 +187,17 @@ signals an error."
         ((= error-code 2)
          (error "No function name given to %s" php-auto-yasnippet-php-program))
         ;; We get this error code when the PHP program exits with the
-        ;; value ERROR_UNKNOWN_FUNCTION.  That means the user tried to
+        ;; value ERROR_UNKNOWN_FUNCTION. That means the user tried to
         ;; create a snippet for a function the program does not
-        ;; recognize as a standard PHP function.  So arguably we
-        ;; should report this via user-error since we could say the
-        ;; fault is on the user.  However, if we do that then we are
-        ;; making the assumption that php-auto-yasnippets made no
-        ;; mistake in selecting the function name from the buffer.  It
-        ;; is possible that the function is not recognized because we
-        ;; screwed up and did not send the complete function name.  So
-        ;; until we are completely confident about that aspect of the
-        ;; code we will treat this as an error on our part and not as
-        ;; a mistake by the user.
+        ;; recognize. So arguably we should report this via user-error
+        ;; since we could say the fault is on the user. However, if we
+        ;; do that then we are making the assumption that
+        ;; php-auto-yasnippets made no mistake in selecting the function
+        ;; name from the buffer. It is possible that the function is not
+        ;; recognized because we screwed up and did not send the
+        ;; complete function name. So until we are completely confident
+        ;; about that aspect of the code we will treat this as an error
+        ;; on our part and not as a mistake by the user.
         ((= error-code 3)
          (error "%s is not a recognized PHP function" user-input))
         ;; If we get this error code, ERROR_UNKNOWN_METHOD, then we
@@ -205,9 +214,9 @@ signals an error."
 (defun payas/define-template (input)
   "Create a snippet for INPUT.
 
-The INPUT must be the name of a PHP standard library function.
-This function creates a snippet for that function and associates
-it with `php-mode'."
+The INPUT must be the name of an available PHP function. This
+function creates a snippet for that function and associates it
+with `php-mode'."
   (unless (gethash 'php-mode yas--tables)
     (yas--table-get-create 'php-mode))
   (unless (yas--get-template-by-uuid 'php-mode input)
