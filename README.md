@@ -115,6 +115,7 @@ Contributors
 * [Glynn Forrest](http://glynnforrest.com)
 * [Yasuyuki Oka](http://yasuyk.github.io/)
 * [Steve Purcell](http://www.sanityinc.com/)
+* [Nate Eagleson](http://www.nateeag.com/)
 
 
 Miscellaneous
