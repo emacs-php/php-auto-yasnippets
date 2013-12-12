@@ -90,12 +90,32 @@ expand into a snippet containing all of the parameters, their names,
 any default values, et cetera.
 
 
+Loading User Code
+-----------------
+
+This package can also generate snippets for user-defined functions and methods.
+
+You can tell a buffer what files to load for function and class definitions by
+setting `php-auto-yasnippet-required-files` to a list of required paths.
+
+If you use [Composer](http://getcomposer.org/), you might put something like
+this in `~/project/.dir-locals.el`:
+
+```lisp
+(php-mode . ((php-auto-yasnippet-required-files (list "~/project/vendor/autoload.php"))))
+```
+
+Now you can generate snippets for any classes Composer autoloads, in any PHP
+file in the project.
+
+
 Contributors
 ------------
 
 * [Glynn Forrest](http://glynnforrest.com)
 * [Yasuyuki Oka](http://yasuyk.github.io/)
 * [Steve Purcell](http://www.sanityinc.com/)
+* [Nate Eagleson](http://www.nateeag.com/)
 
 
 Miscellaneous
