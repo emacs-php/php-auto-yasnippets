@@ -79,7 +79,7 @@ foreach ($argv as $arg)
 /* We have the right number of arguments?  We should have two at a
  * minimum: the name of the program itself, and the function name.
  */
-if ($args < 2)
+if (count($args) < 2)
 {
         exit(ERROR_MISSING_ARGUMENT);
 }
