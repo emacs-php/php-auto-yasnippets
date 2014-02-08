@@ -3,7 +3,8 @@ Automatic YASnippets for PHP in Emacs
 
 The php-auto-yasnippets package for [GNU Emacs][emacs] will
 automatically create ‘snippets’ for [standard PHP functions][php].  It
-defines these snippets using the [YASnippet package][yas].  For
+defines these snippets using the [YASnippet package][yas], with optional
+support for [auto-complete][auto-complete].  For
 example, if you type the PHP function
 
 ```php
@@ -17,7 +18,7 @@ implode($glue, $pieces)
 ```
 
 with the cursor ready to overwrite `$glue` with the string you want to
-use.  And then pressing Tab will skip over to `$pieces` to do the
+use.  Pressing Tab will skip over to `$pieces` to do the
 same.  This way you can be sure you not only have the correct number
 of arguments, but also that you have them in the correct order.  PHP
 comes with a large standard library and functions that sound similar
@@ -41,14 +42,12 @@ the prefix, u.g. `C-u C-c C-y`, the package will ask you for the name
 of the class which implements that method.  This information is
 necessary in order to generate the correct snippet.
 
-
 Requirements
 ------------
 
 * PHP 5.3 or later
 * [YASnippet][yas]
 * [php-mode][php-mode]
-
 
 Installation
 ------------
@@ -88,6 +87,36 @@ only works when using php-mode.  For example:
 Now if you type the name of a PHP function and press `C-c C-y` it will
 expand into a snippet containing all of the parameters, their names,
 any default values, et cetera.
+
+
+auto-complete
+-------------
+
+With auto-complete support activated, it's even simpler:
+
+```php
+imp
+```
+
+followed by `Tab`, then `Return` (to choose the first completion) expands the
+snippet to
+
+```php
+implode($glue, $pieces)
+```
+
+First, install and configure [auto-complete][auto-complete].
+
+Add
+
+```lisp
+(payas/ac-setup)
+```
+
+to your php-auto-yasnippets setup, and you should be good to go.
+
+Note that auto-completion does not support user-defined functions or
+classes (it relies on auto-complete's php-mode dictionary of functions).
 
 
 Loading User Code
@@ -136,6 +165,7 @@ Copyright 2013 Eric James Michael Ritz
 [emacs]: http://www.gnu.org/software/emacs/
 [php]: http://php.net/
 [yas]: https://github.com/capitaomorte/yasnippet
+[auto-complete]: https://github.com/auto-complete/auto-complete
 [php-mode]: https://github.com/ejmr/php-mode
 [gpl]: http://www.gnu.org/copyleft/gpl.html
 [home]: https://github.com/ejmr/php-auto-yasnippets
