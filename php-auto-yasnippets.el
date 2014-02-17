@@ -135,7 +135,7 @@ It's probably best to set this per-project via .dir-locals.")
        '((depends yasnippet)
          ;; TODO The php-mode dictionary contains a few things (keywords and
          ;; the like) that should not be included
-         (candidates . ac-buffer-dictionary)
+         (candidates . (ac-mode-dictionary 'php-mode))
          (action . payas/ac-insert-func-and-create-snippet)
 
          ;; Since these trigger yasnippet, use the yasnippet face.
