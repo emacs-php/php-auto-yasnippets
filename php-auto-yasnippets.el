@@ -182,7 +182,7 @@ the snippet.  The return value is the exit code of that program."
     (let* ((input-chunks (split-string input))
            (function-or-method-name (first input-chunks))
            (class-name (or (second input-chunks) ""))
-           (args (list php-executable nil (current-buffer) nil php-auto-yasnippet-php-program)))
+           (args (list php-executable nil (current-buffer) nil (expand-file-name php-auto-yasnippet-php-program))))
 
       (setq command-args (list function-or-method-name class-name))
       (dolist (elt php-auto-yasnippet-required-files command-args)
