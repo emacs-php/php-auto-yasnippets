@@ -145,6 +145,7 @@ Contributors
 * [Yasuyuki Oka](http://yasuyk.github.io/)
 * [Steve Purcell](http://www.sanityinc.com/)
 * [Nate Eagleson](http://www.nateeag.com/)
+* [Alessandro Madruga Correia](https://github.com/amcorreia)
 
 
 Miscellaneous
