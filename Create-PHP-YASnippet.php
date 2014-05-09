@@ -205,7 +205,8 @@ if (count($group_name_pieces) > 0)
  */
 $snippet_chunks = array();
 
-foreach ($function->getParameters() as $parameter)
+$number_of_parameters = $function->getNumberOfParameters();
+foreach ($function->getParameters() as $parameter_number => $parameter)
 {
         $type_hint = null;
 
@@ -231,8 +232,10 @@ foreach ($function->getParameters() as $parameter)
          * the parameter has a default value, which may be possible
          * since it is optional.
          */
+        $format = '${%d:%s},';
         if ($parameter->isOptional())
         {
+                $format = '${%d:%s,}';
                 if ($parameter->isDefaultValueAvailable())
                 {
                         $name = $name . " = " . (string) $parameter->getDefaultValue();
@@ -245,8 +248,12 @@ foreach ($function->getParameters() as $parameter)
                 $name = "[$name]";
         }
 
+        if ($number_of_parameters - 1 === $parameter_number) {
+            $format = str_replace(',', '', $format);
+        }
+
         $snippet_chunks[] = sprintf(
-                '${%d:%s,}',
+                $format,
                 // We must add one to the position because PHP starts
                 // from zero, but for the snippet we want parameter
                 // numbering to start from one.
