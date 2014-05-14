@@ -138,23 +138,22 @@ It's probably best to set this per-project via .dir-locals.")
   "Add ac-source-php-auto-yasnippets to ac-sources."
   (interactive)
 
-  (eval-after-load 'auto-complete
-    '(progn
-       (ac-define-source php-auto-yasnippets
-         '((depends yasnippet)
-           ;; TODO The php-mode dictionary contains a few things (keywords and
-           ;; the like) that should not be included
-           (candidates . (ac-mode-dictionary 'php-mode))
-           (action . payas/ac-insert-func-and-create-snippet)
+  (require 'auto-complete)
+  (ac-define-source php-auto-yasnippets
+    '((depends yasnippet)
+      ;; TODO The php-mode dictionary contains a few things (keywords and
+      ;; the like) that should not be included
+      (candidates . (ac-mode-dictionary 'php-mode))
+      (action . payas/ac-insert-func-and-create-snippet)
 
-           ;; Since these trigger yasnippet, use the yasnippet face.
-           (candidate-face . ac-yasnippet-candidate-face)
-           (selection-face . ac-yasnippet-selection-face)
+      ;; Since these trigger yasnippet, use the yasnippet face.
+      (candidate-face . ac-yasnippet-candidate-face)
+      (selection-face . ac-yasnippet-selection-face)
 
-           ;; The 'p' suffix on auto-complete entries stands for 'PHP', and helps
-           ;; distinguish them from regular yasnippet entries.
-           (symbol . "p")))
-       (add-to-list 'ac-sources 'ac-source-php-auto-yasnippets))))
+      ;; The 'p' suffix on auto-complete entries stands for 'PHP', and helps
+      ;; distinguish them from regular yasnippet entries.
+      (symbol . "p")))
+  (add-to-list 'ac-sources 'ac-source-php-auto-yasnippets))
 
 
 ;;; Below are all of the internal functions.  All of these functions
