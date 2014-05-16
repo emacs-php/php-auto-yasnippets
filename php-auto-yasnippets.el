@@ -129,23 +129,6 @@
 This makes it possible to generate snippets for user code.
 It's probably best to set this per-project via .dir-locals.")
 
-(eval-after-load 'auto-complete
-  '(progn
-     (ac-define-source php-auto-yasnippets
-       '((depends yasnippet)
-         ;; TODO The php-mode dictionary contains a few things (keywords and
-         ;; the like) that should not be included
-         (candidates . (ac-mode-dictionary 'php-mode))
-         (action . payas/ac-insert-func-and-create-snippet)
-
-         ;; Since these trigger yasnippet, use the yasnippet face.
-         (candidate-face . ac-yasnippet-candidate-face)
-         (selection-face . ac-yasnippet-selection-face)
-
-         ;; The 'p' suffix on auto-complete entries stands for 'PHP', and helps
-         ;; distinguish them from regular yasnippet entries.
-         (symbol . "p")))))
-
 (defun payas/ac-insert-func-and-create-snippet ()
   "Insert the selected function name then create its auto-snippet."
   (ac-expand)
@@ -154,6 +137,22 @@ It's probably best to set this per-project via .dir-locals.")
 (defun payas/ac-setup ()
   "Add ac-source-php-auto-yasnippets to ac-sources."
   (interactive)
+
+  (require 'auto-complete)
+  (ac-define-source php-auto-yasnippets
+    '((depends yasnippet)
+      ;; TODO The php-mode dictionary contains a few things (keywords and
+      ;; the like) that should not be included
+      (candidates . (ac-mode-dictionary 'php-mode))
+      (action . payas/ac-insert-func-and-create-snippet)
+
+      ;; Since these trigger yasnippet, use the yasnippet face.
+      (candidate-face . ac-yasnippet-candidate-face)
+      (selection-face . ac-yasnippet-selection-face)
+
+      ;; The 'p' suffix on auto-complete entries stands for 'PHP', and helps
+      ;; distinguish them from regular yasnippet entries.
+      (symbol . "p")))
   (add-to-list 'ac-sources 'ac-source-php-auto-yasnippets))
 
 
