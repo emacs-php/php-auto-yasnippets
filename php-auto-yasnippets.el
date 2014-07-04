@@ -80,7 +80,9 @@
 (require 'thingatpt)
 (require 'php-mode)
 (require 'yasnippet)
-
+(eval-when-compile
+  (when (locate-library "auto-complete")
+    (require 'auto-complete)))
 
 ;;; This section defines constants the package uses as well as any
 ;;; global variables which the user may wish to change.
@@ -138,7 +140,6 @@ It's probably best to set this per-project via .dir-locals.")
   "Add ac-source-php-auto-yasnippets to ac-sources."
   (interactive)
 
-  (require 'auto-complete)
   (ac-define-source php-auto-yasnippets
     '((depends yasnippet)
       ;; TODO The php-mode dictionary contains a few things (keywords and
