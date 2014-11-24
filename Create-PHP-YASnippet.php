@@ -90,7 +90,12 @@ foreach ($required_files as $file)
         exit(ERROR_REQUIRED_FILE_MISSING);
     }
 
+    $script_dir = getcwd();
+    chdir(dirname($file));
+
     require_once $file;
+
+    chdir($script_dir);
 }
 
 /* If we get to here then we have a name on the command-line.  It may
