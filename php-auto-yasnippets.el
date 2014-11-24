@@ -247,13 +247,17 @@ with `php-mode'."
   (unless (gethash 'php-mode yas--tables)
     (yas--table-get-create 'php-mode))
   (unless (yas--get-template-by-uuid 'php-mode input)
+    (setq required-files-local php-auto-yasnippet-required-files)
     (with-temp-buffer
       (let ((exit-code (payas/create-template input)))
+        (setq required-files-global php-auto-yasnippet-required-files
+              php-auto-yasnippet-required-files required-files-local)
         (if (/= exit-code 0)
             (payas/report-error exit-code input))
         (yas-define-snippets
          'php-mode
-         (list (yas--parse-template)))))))
+         (list (yas--parse-template)))
+        (setq php-auto-yasnippet-required-files required-files-global)))))
 
 (defun payas/remove-extra-whitespace ()
   "Remove whitespace before a function's closing parenthesis.
