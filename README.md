@@ -146,6 +146,7 @@ Contributors
 * [Steve Purcell](http://www.sanityinc.com/)
 * [Nate Eagleson](http://www.nateeag.com/)
 * [Alessandro Madruga Correia](https://github.com/amcorreia)
+* [Michel Bystranowski](https://github.com/bystrano)
 
 
 Miscellaneous
