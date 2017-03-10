@@ -180,8 +180,8 @@ This function runs `php-auto-yasnippet-php-program' to generate
 the snippet.  The return value is the exit code of that program."
   (save-match-data
     (let* ((input-chunks (split-string input))
-           (function-or-method-name (first input-chunks))
-           (class-name (or (second input-chunks) ""))
+           (function-or-method-name (nth 0 input-chunks))
+           (class-name (or (nth 1 input-chunks) ""))
            (args (list php-executable nil (current-buffer) nil (expand-file-name php-auto-yasnippet-php-program))))
 
       (setq command-args (list function-or-method-name class-name))
@@ -232,9 +232,9 @@ signals an error."
         ;; better-looking error message.
         ((= error-code 4)
          (let* ((input-chunks (split-string user-input))
-                (method-name (concat (second input-chunks)
+                (method-name (concat (nth 1 input-chunks)
                                      "::"
-                                     (first input-chunks))))
+                                     (nth 0 input-chunks))))
            (error "%s is not a recognized PHP method" method-name)))
         (t nil)))
 
@@ -298,7 +298,7 @@ If called with the universal prefix then it prompts the user for
 the name of a PHP class and treats the name at point as the name
 of a method for that class."
   (interactive "P")
-  (let ((function (thing-at-point 'symbol))
+  (let ((function (thing-at-point 'sexp))
         (class
          (if prefix
              (read-from-minibuffer "Class: "))))
