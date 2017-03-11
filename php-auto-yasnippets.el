@@ -236,6 +236,8 @@ signals an error."
                                      "::"
                                      (nth 0 input-chunks))))
            (error "%s is not a recognized PHP method" method-name)))
+	((= error-code 5)
+	 (error "Missing file at %s" (format nil "{~A~^, ~}" php-auto-yasnippet-required-files)))
         (t nil)))
 
 (defun payas/define-template (input)
