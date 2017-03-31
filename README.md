@@ -147,6 +147,7 @@ Contributors
 * [Nate Eagleson](http://www.nateeag.com/)
 * [Alessandro Madruga Correia](https://github.com/amcorreia)
 * [Michel Bystranowski](https://github.com/bystrano)
+* [Martin Tang](https://github.com/MarTango)
 
 
 Miscellaneous
