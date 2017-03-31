@@ -161,7 +161,7 @@ License
 
 [GNU General Public License][gpl]
 
-Copyright 2013, 2014 Eric James Michael Ritz
+Copyright 2013, 2014, 2015, 2016, 2017 Eric James Michael Ritz
 
 
 

@@ -13,7 +13,7 @@
  * must also receive a second argument: the name of the class that
  * implements that method.
  *
- * Copyright 2013 Eric James Michael Ritz
+ * Copyright 2013, 2014, 2015, 2016, 2017 Eric James Michael Ritz
  *
  * This program is free software: you can redistribute it and/or
  * modify it under the terms of the GNU General Public License as

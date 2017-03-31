@@ -1,6 +1,6 @@
 ;;; php-auto-yasnippets.el --- Creates snippets for PHP functions
 ;;
-;; Copyright 2013, 2014 Eric James Michael Ritz
+;; Copyright 2013, 2014, 2015, 2016, 2017 Eric James Michael Ritz
 ;;
 ;; Author: Eric James Michael Ritz
 ;; URL: https://github.com/ejmr/php-auto-yasnippets
